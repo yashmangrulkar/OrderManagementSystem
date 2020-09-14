@@ -1,0 +1,23 @@
+package com.oms.cart.cartservice.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.oms.cart.cartservice.service.Cartservice;
+
+@RestController
+public class CartController {
+
+	@Autowired
+	Cartservice cartservice;
+
+	@GetMapping("/addtocart/{username}/{password}")
+	public void addCart(@PathVariable String username, @PathVariable String password) {
+
+		cartservice.addToCart(username, password);
+
+	}
+
+}

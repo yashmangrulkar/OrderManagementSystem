@@ -1,0 +1,19 @@
+package com.oms.order.orderservice.service;
+
+public class OrderServiceImpl implements OrderService {
+	
+	
+	@Override
+	public void getAllProducts() {
+		
+	}
+
+	@Override
+	public void placedOrder() {
+		
+		
+	}
+
+	
+
+}

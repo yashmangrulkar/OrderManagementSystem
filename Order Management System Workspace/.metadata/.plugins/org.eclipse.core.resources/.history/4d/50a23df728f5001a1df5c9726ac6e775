@@ -1,0 +1,45 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.model.User;
+import com.oms.cart.cartservice.repository.CartRepository;
+
+@Service
+public class CartServiceImpl implements Cartservice {
+
+	@Autowired
+	CartRepository cartRepository;
+
+	@Override
+	public void addToCart(String username, String password) {
+
+		String uri = "http://localhost:8081/login/{username}/{password}";
+
+		RestTemplate restemplate = new RestTemplate();
+
+		List<User> responseEntity = restemplate.getForObject(uri, List.class);
+		System.out.println("ResponseEntity: " + responseEntity);
+
+//		Cart cart = new Cart();
+//		     cart.setUsername(username);
+//		     cart.setPassword(password);
+//		     
+//		     
+//		     
+//		cartRepository.save(entity)
+	}
+
+	@Override
+	public Cart removeProductFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

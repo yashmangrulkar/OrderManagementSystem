@@ -1,0 +1,25 @@
+package com.oms.order.orderservice.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class OrderProduct {
+	@Id
+	private int orderProductId;
+	public int getOrderProductId() {
+		return orderProductId;
+	}
+	public void setOrderProductId(int orderProductId) {
+		this.orderProductId = orderProductId;
+	}
+	public String getProcessStatus() {
+		return processStatus;
+	}
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+	private String processStatus;
+	
+
+}

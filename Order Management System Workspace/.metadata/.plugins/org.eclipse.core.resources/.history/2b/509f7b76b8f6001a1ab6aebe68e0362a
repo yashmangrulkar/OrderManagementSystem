@@ -1,0 +1,11 @@
+package com.oms.order.orderservice.service;
+
+import java.util.List;
+
+import com.oms.order.orderservice.model.Products;
+
+public interface OrderService {
+	public void placedOrder(int cartId);
+	public List<Products> getAllProducts(int cartId, int productId);
+	
+}

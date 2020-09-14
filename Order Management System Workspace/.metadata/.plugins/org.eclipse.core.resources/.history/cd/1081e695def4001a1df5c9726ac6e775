@@ -1,0 +1,8 @@
+package com.oms.user.userservice.serviceimpl;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl {
+
+}

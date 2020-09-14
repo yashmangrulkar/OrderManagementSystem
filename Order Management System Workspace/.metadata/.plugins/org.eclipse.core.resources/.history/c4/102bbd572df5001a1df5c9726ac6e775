@@ -1,0 +1,73 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.model.User;
+import com.oms.cart.cartservice.repository.CartRepository;
+
+@Service
+public class CartServiceImpl implements Cartservice {
+
+	@Autowired
+	CartRepository cartRepository;
+
+	@Override
+	public void addToCart(String username, String password) {
+
+		String uri = "http://localhost:8081/login/{username}/{password}";
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+		headers.set("username", username);
+		headers.set("password", password);
+
+		HttpEntity request = new HttpEntity(headers);
+
+		ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, request, List.class);
+
+//		List<User> responseEntity = restemplate.getForObject(uri, List.class);
+		System.out.println("ResponseEntity: " + response);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.set("Accept", "application/text");
+//
+//		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri).queryParam("username", username)
+//				.queryParam("password", password);
+//
+//		HttpEntity<?> entity = new HttpEntity<>(headers);
+//
+//		HttpEntity<List> response = restemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, List.class);
+//
+//		List<User> userList = response.getBody();
+//
+//		System.out.println("UserList is :" + userList.toString());
+//
+//		System.out.println("HttpEntity Response is :" + response);
+	}
+
+	@Override
+	public Cart removeProductFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

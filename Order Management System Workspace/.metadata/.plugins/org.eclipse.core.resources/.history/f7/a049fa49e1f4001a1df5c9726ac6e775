@@ -1,0 +1,29 @@
+package com.oms.user.userservice.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.oms.user.userservice.model.User;
+import com.oms.user.userservice.service.UserService;
+
+@CrossOrigin("*")
+@RestController
+public class UserController {
+
+	@Autowired
+	UserService userService;
+
+	@GetMapping(value = "/login/{username}/{password}")
+	public List<User> loginUser(@PathVariable(value = "username") String username,
+			@PathVariable(value = "password") String password) {
+		List<User> userList = userService.userLogin(username, password);
+
+		return userList;
+
+	}
+}

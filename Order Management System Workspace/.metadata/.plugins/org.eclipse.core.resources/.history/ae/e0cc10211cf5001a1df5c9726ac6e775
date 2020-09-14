@@ -1,0 +1,5 @@
+package com.oms.cart.cartservice.model;
+
+public class Cart {
+
+}

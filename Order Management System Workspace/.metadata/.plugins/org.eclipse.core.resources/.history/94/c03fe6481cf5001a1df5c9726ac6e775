@@ -1,0 +1,13 @@
+package com.oms.cart.cartservice.model;
+
+import java.util.List;
+
+public class Cart {
+
+	private int cartId;
+	private int userId;
+	private String username;
+	private String password;
+	private List<Products> products;
+
+}

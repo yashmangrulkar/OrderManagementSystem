@@ -1,0 +1,38 @@
+package com.oms.product.productservice.service;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.oms.product.productservice.model.Products;
+import com.oms.product.productservice.repository.ProductRepository;
+
+public class ProductServiceImpl implements ProductService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+
+	@Autowired
+	ProductRepository productRepository;
+
+	@Override
+	public List<Products> getProductList() {
+		LOGGER.info("Start getProductList method");
+		List<Products> productList = null;
+		try {
+			productList = productRepository.findAll();
+		} catch (Exception e) {
+			LOGGER.error("Error occured while fetching getProductList method: " + e.getMessage());
+		}
+		LOGGER.info("Start getProductList method");
+		return productList;
+	}
+
+	@Override
+	public Products getProduct() {
+
+		return null;
+	}
+
+}

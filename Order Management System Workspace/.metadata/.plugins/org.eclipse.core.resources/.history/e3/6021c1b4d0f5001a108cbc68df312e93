@@ -1,0 +1,15 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.List;
+
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.model.User;
+
+public interface Cartservice {
+	
+	public List<User> getAllProducts();
+
+	public void addToCart(String username, String password);
+
+	public Cart removeProductFromCart();
+}

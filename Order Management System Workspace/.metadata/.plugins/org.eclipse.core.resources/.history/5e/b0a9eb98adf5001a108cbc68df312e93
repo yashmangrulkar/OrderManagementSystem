@@ -1,0 +1,11 @@
+package com.oms.user.userservice.service;
+
+import java.util.List;
+
+import com.oms.user.userservice.model.User;
+
+public interface UserService {
+
+	public List<User> userLogin(String username, String password);
+
+}

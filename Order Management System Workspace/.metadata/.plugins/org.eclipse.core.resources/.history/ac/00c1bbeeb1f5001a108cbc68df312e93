@@ -1,0 +1,10 @@
+package com.oms.cart.cartservice.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.oms.cart.cartservice.model.Cart;
+
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+
+}

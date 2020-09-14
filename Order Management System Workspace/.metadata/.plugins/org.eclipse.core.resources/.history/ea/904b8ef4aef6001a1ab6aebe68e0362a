@@ -1,0 +1,5 @@
+package com.oms.order.orderservice.model;
+
+public class OrderProduct {
+
+}

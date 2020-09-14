@@ -1,0 +1,42 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.model.Products;
+import com.oms.cart.cartservice.repository.CartRepository;
+
+@Service
+public class CartServiceImpl implements Cartservice{
+
+	@Autowired
+	CartRepository cartRepository;
+	
+	@Override
+	public void addToCart(String username, String password) {
+		
+		ResponseEntity<List<User>> responseEntity = new RestTemplate().getForEntity(
+				"http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyConversionBean.class,
+				uriVariables);
+		
+		
+		Cart cart = new Cart();
+		     cart.setUsername(username);
+		     cart.setPassword(password);
+		     
+		     
+		     
+		cartRepository.save(entity)
+	}
+
+	@Override
+	public Cart removeProductFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

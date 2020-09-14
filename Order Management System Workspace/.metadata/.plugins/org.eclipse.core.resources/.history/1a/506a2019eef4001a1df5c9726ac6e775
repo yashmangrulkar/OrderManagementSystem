@@ -1,0 +1,5 @@
+package com.oms.product.productservice.repository;
+
+public interface ProductRepository {
+
+}

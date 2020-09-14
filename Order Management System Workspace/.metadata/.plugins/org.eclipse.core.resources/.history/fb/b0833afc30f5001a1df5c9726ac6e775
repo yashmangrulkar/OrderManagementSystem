@@ -1,0 +1,68 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.catalina.mapper.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.model.User;
+import com.oms.cart.cartservice.repository.CartRepository;
+
+@Service
+public class CartServiceImpl implements Cartservice {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CartServiceImpl.class);
+
+	@Autowired
+	CartRepository cartRepository;
+
+	@Override
+	public void addToCart(String username, String password) {
+
+		Map<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("username", username);
+		uriVariables.put("password", password);
+
+		ResponseEntity<List> responseEntity = new RestTemplate()
+				.getForEntity("http://localhost:8081/login/{username}/{password}", List.class, uriVariables);
+
+		List<User> response = responseEntity.getBody();
+
+		ObjectMapper mapper = new ObjectMapper();
+		User user = mapper.convertValue(response, User.class);
+
+//		if (response != null) {
+//
+//			Cart cart = new Cart();
+//			cart.setUsername(username);
+//			cart.setPassword(password);
+//			cart.setUserId(user.getUserId());
+//			cart.setProducts(user.getProducts());
+//
+//			cartRepository.save(cart);
+//
+//		} else {
+//
+//			LOGGER.info("Username or Password is Incorrect");
+//		}
+
+		System.out.println("Response is :" + user.toString());
+
+	}
+
+	@Override
+	public Cart removeProductFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

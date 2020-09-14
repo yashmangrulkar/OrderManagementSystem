@@ -1,0 +1,5 @@
+package com.oms.user.userservice.serviceimpl;
+
+public class UserServiceImpl {
+
+}

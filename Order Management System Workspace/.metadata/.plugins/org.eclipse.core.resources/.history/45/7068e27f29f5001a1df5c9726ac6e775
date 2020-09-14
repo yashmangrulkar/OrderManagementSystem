@@ -1,0 +1,53 @@
+package com.oms.cart.cartservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.oms.cart.cartservice.model.Cart;
+import com.oms.cart.cartservice.repository.CartRepository;
+
+@Service
+public class CartServiceImpl implements Cartservice {
+
+	@Autowired
+	CartRepository cartRepository;
+
+	@Override
+	public void addToCart(String username, String password) {
+
+		String uri = "http://localhost:8081/login/{username}/{password}";
+
+		RestTemplate restemplate = new RestTemplate();
+
+//		List<User> responseEntity = restemplate.getForObject(uri, List.class);
+//		System.out.println("ResponseEntity: " + responseEntity);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", "application/json");
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri).queryParam("username", username)
+				.queryParam("password", password);
+
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		HttpEntity<List> response = restemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, List.class);
+
+		System.out.println("HttpEntity Response is :" + response);
+	}
+
+	@Override
+	public Cart removeProductFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

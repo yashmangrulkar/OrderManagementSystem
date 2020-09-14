@@ -1,0 +1,21 @@
+package com.oms.product.productservice.service;
+
+import java.util.List;
+
+import com.oms.product.productservice.model.Products;
+
+public class ProductServiceImpl implements ProductService {
+
+	@Override
+	public List<Products> getProductList() {
+		
+		return null;
+	}
+
+	@Override
+	public Products getProduct() {
+		
+		return null;
+	}
+
+}

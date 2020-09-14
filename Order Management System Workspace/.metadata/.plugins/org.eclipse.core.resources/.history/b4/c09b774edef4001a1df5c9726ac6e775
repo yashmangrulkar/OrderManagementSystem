@@ -1,0 +1,5 @@
+package com.oms.user.userservice.repository;
+
+public interface UserLoginRepository {
+
+}
