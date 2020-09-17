@@ -8,7 +8,9 @@ public interface Cartservice {
 	public Products[] getAllProducts();
 
 	public void addToCart(String username, String password, int cartId);
-	
+
+	public void addToCartFeign(String username, String password, int cartId);
+
 	public Cart getAllCartByID(int cartId);
 
 	public Cart removeProductFromCart(int cartId, int productID);

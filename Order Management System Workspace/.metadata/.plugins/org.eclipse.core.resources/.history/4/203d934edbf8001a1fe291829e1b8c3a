@@ -1,0 +1,10 @@
+package com.oms.order.orderservice;
+
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "netflix-zuul-api-gateway-server")
+@RibbonClient(name ="product-service")
+public interface CartServiceProxy {
+
+}

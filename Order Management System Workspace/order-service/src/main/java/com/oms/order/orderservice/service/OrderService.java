@@ -7,6 +7,8 @@ import com.oms.order.orderservice.model.Products;
 
 public interface OrderService {
 	public Cart placedOrder(String username, String password, int cartId, int productId, int orderId);
+	
+	public Cart placedOrderFeign(String username, String password, int cartId, int productId, int orderId);
 
 	public List<Products> getAllProducts(int cartId);
 

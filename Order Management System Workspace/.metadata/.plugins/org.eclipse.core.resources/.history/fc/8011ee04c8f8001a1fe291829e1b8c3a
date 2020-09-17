@@ -1,0 +1,8 @@
+package com.oms.cart.cartservice;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "product-service", url = "localhost:8082")
+public interface ProductServiceProxy {
+
+}

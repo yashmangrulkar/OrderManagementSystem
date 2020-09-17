@@ -1,0 +1,18 @@
+package com.oms.cart.cartservice;
+
+import java.util.List;
+
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.oms.cart.cartservice.model.Products;
+
+//@FeignClient(name = "product-service", url = "localhost:8082")
+@FeignClient(name = "product-service")
+@RibbonClient(name ="product-service")
+public interface ProductServiceProxy {
+
+	@GetMapping("/allproducts")
+	public List<Products> fetchAllProduct();
+}

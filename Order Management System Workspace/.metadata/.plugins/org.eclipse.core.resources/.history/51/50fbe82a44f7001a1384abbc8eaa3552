@@ -1,0 +1,14 @@
+package com.oms.order.orderservice.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class OrderedProduct {
+
+	@Id
+	private int orPrID;
+	private String orproductName;
+
+
+}

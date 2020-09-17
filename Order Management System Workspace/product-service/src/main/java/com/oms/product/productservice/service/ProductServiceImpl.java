@@ -29,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 			LOGGER.error("Error occured while fetching getProductList method: " + e.getMessage());
 		}
 		LOGGER.info("Start getProductList method");
+		LOGGER.info("{}", productList);
 		return productList;
 	}
 

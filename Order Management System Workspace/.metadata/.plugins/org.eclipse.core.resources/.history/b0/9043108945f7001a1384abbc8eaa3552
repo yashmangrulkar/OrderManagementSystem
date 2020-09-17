@@ -1,0 +1,22 @@
+package com.oms.order.orderservice.model;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
+public class Order {
+
+	@Id
+	private int orderId;
+	private LocalDate date;
+	private String orderStatus;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<OrderedProduct> orderedProductList;
+
+}

@@ -1,0 +1,13 @@
+package com.oms.order.orderservice.service;
+
+import java.util.List;
+
+import com.oms.order.orderservice.model.Cart;
+import com.oms.order.orderservice.model.Products;
+
+public interface OrderService {
+	public void placedOrder(String usernmae, String password, int cartId, int productId,int orderId);
+	public List<Products> getAllProducts(int cartId);
+	public Cart removeAfterPlacingOrder(String username, String password, int cardId);
+	
+}

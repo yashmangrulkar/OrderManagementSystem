@@ -13,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.oms.order.orderservice.CartServiceProxy;
 import com.oms.order.orderservice.model.Cart;
-import com.oms.order.orderservice.model.Orders;
 import com.oms.order.orderservice.model.OrderedProduct;
+import com.oms.order.orderservice.model.Orders;
 import com.oms.order.orderservice.model.Products;
 import com.oms.order.orderservice.model.User;
 import com.oms.order.orderservice.repository.OrderRepository;
@@ -28,60 +29,111 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	OrderRepository orderRepository;
 
+	@Autowired
+	CartServiceProxy proxy;
+
+	// Get AllProducts by CartId
 	@Override
 	public List<Products> getAllProducts(int cartId) {
-		Map<String, Integer> uriVariables = new HashMap<>();
-		uriVariables.put("cartId", cartId);
 
-		ResponseEntity<Cart> responseEntity = new RestTemplate()
-				.getForEntity("http://localhost:8084/fetchCart/{cartId}", Cart.class, uriVariables);
-		Cart cart = responseEntity.getBody();
+		Cart cart = proxy.fetchCartById(cartId);
 		return cart.getProducts();
 
 	}
+
+	// Place Order
 
 	@Override
 	public Cart placedOrder(String username, String password, int cartId, int productId, int orderId) {
 		Cart cart = null;
 		try {
-		
-		Map<String, String> uriVariables = new HashMap<>();
-		uriVariables.put("username", username);
-		uriVariables.put("password", password);
 
-		ResponseEntity<User> responseEntity = new RestTemplate()
-				.getForEntity("http://localhost:8081/login/{username}/{password}", User.class, uriVariables);
+			Map<String, String> uriVariables = new HashMap<>();
+			uriVariables.put("username", username);
+			uriVariables.put("password", password);
 
-		User response = responseEntity.getBody();
+			ResponseEntity<User> responseEntity = new RestTemplate()
+					.getForEntity("http://localhost:8081/login/{username}/{password}", User.class, uriVariables);
 
-				if(response!= null)
-				{
-			List<OrderedProduct> orderProductList = new ArrayList<>();
-			List<Products> productList = getAllProducts(cartId);
-			if (productList != null) {
-				Orders order = new Orders();
-				order.setDate(LocalDate.now());
-				order.setOrderId(orderId);
-				order.setOrderStatus("Ordered");
-				
-				for (Products product : productList) {
-					if (product.getProductID() == productId) {
-						OrderedProduct orderProduct = new OrderedProduct();
-						orderProduct.setOrPrID(product.getProductID());
-						orderProduct.setOrproductName(product.getProductName());
-						orderProductList.add(orderProduct);
+			User response = responseEntity.getBody();
+
+			if (response != null) {
+				List<OrderedProduct> orderProductList = new ArrayList<>();
+				List<Products> productList = getAllProducts(cartId);
+				if (productList != null) {
+					Orders order = new Orders();
+					order.setDate(LocalDate.now());
+					order.setOrderId(orderId);
+					order.setOrderStatus("Ordered");
+
+					for (Products product : productList) {
+						if (product.getProductID() == productId) {
+							OrderedProduct orderProduct = new OrderedProduct();
+							orderProduct.setOrPrID(product.getProductID());
+							orderProduct.setOrproductName(product.getProductName());
+							orderProductList.add(orderProduct);
+						}
 					}
+					order.setOrderedProductList(orderProductList);
+					orderRepository.save(order);
+					cart = removeAfterPlacingOrder(productId, cartId);
 				}
-				order.setOrderedProductList(orderProductList);
-				orderRepository.save(order);
-				cart = removeAfterPlacingOrder(productId, cartId);
-			}
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.error("error while placing Order: " + e.getMessage());
 		}
+
+		LOGGER.info("{}", cart);
+		return cart;
+	}
+
+	// Place Order via Feign
+
+	@Override
+	public Cart placedOrderFeign(String username, String password, int cartId, int productId, int orderId) {
+		Cart cart = null;
+		try {
+
+			Map<String, String> uriVariables = new HashMap<>();
+			uriVariables.put("username", username);
+			uriVariables.put("password", password);
+
+			ResponseEntity<User> responseEntity = new RestTemplate()
+					.getForEntity("http://localhost:8081/login/{username}/{password}", User.class, uriVariables);
+
+			User response = responseEntity.getBody();
+
+			if (response != null) {
+				List<OrderedProduct> orderProductList = new ArrayList<>();
+				List<Products> productList = getAllProducts(cartId);
+				if (productList != null) {
+					Orders order = new Orders();
+					order.setDate(LocalDate.now());
+					order.setOrderId(orderId);
+					order.setOrderStatus("Ordered");
+
+					for (Products product : productList) {
+						if (product.getProductID() == productId) {
+							OrderedProduct orderProduct = new OrderedProduct();
+							orderProduct.setOrPrID(product.getProductID());
+							orderProduct.setOrproductName(product.getProductName());
+							orderProductList.add(orderProduct);
+						}
+					}
+					order.setOrderedProductList(orderProductList);
+					orderRepository.save(order);
+					cart = removeAfterPlacingOrder(productId, cartId);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.error("error while placing Order: " + e.getMessage());
+		}
+
+		LOGGER.info("{}", cart);
 		return cart;
 	}
 

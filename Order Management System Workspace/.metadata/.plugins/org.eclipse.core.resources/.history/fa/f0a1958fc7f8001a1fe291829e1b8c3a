@@ -1,0 +1,5 @@
+package com.oms.cart.cartservice;
+
+public interface ProductServiceProxy {
+
+}
